@@ -59,6 +59,8 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "VideoPlaybackAppDelegate.h"
 #import "VPParentViewController.h"
 #import "QCARutils.h"
+#import "GAI.h"
+#import "GAI-ID.h"
 
 @implementation VideoPlaybackAppDelegate
 
@@ -83,6 +85,16 @@ namespace {
 // this is the application entry point
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = YES;
+    // Create tracker instance.
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GoogleAnalytics_ID];
+    
+    
     QCARutils *qUtils = [QCARutils getInstance];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];

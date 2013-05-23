@@ -64,6 +64,10 @@
 		57C862ED174C14D7003008B0 /* all_you_need.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57C862EB174C14D6003008B0 /* all_you_need.mp4 */; };
 		57C862EE174C14D7003008B0 /* StopMotion.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57C862EC174C14D7003008B0 /* StopMotion.mp4 */; };
 		57C862F0174C157D003008B0 /* Over_Rainbow.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57C862EF174C157D003008B0 /* Over_Rainbow.mp4 */; };
+		57EFA0D7174E877E007D75D9 /* iPostalModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57EFA0D6174E877E007D75D9 /* iPostalModalView.xib */; };
+		57EFA0DA174E87B6007D75D9 /* iPostalModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EFA0D9174E87B6007D75D9 /* iPostalModalViewController.m */; };
+		57EFA0E2174E965B007D75D9 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57EFA0E1174E965B007D75D9 /* libGoogleAnalytics.a */; };
+		57EFA0E4174E9677007D75D9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57EFA0E3174E9677007D75D9 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,6 +187,17 @@
 		57C862EB174C14D6003008B0 /* all_you_need.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = all_you_need.mp4; sourceTree = "<group>"; };
 		57C862EC174C14D7003008B0 /* StopMotion.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = StopMotion.mp4; sourceTree = "<group>"; };
 		57C862EF174C157D003008B0 /* Over_Rainbow.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Over_Rainbow.mp4; sourceTree = "<group>"; };
+		57EFA0D6174E877E007D75D9 /* iPostalModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPostalModalView.xib; sourceTree = "<group>"; };
+		57EFA0D8174E87B6007D75D9 /* iPostalModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPostalModalViewController.h; sourceTree = "<group>"; };
+		57EFA0D9174E87B6007D75D9 /* iPostalModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPostalModalViewController.m; sourceTree = "<group>"; };
+		57EFA0DC174E965B007D75D9 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		57EFA0DD174E965B007D75D9 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		57EFA0DE174E965B007D75D9 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		57EFA0DF174E965B007D75D9 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
+		57EFA0E0174E965B007D75D9 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
+		57EFA0E1174E965B007D75D9 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		57EFA0E3174E9677007D75D9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		57EFA0E5174E9960007D75D9 /* GAI-ID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GAI-ID.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +205,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B2AA041520A82500138A7D /* SystemConfiguration.framework in Frameworks */,
+				57EFA0E4174E9677007D75D9 /* CoreData.framework in Frameworks */,
 				57741A9D174AA19200770855 /* libQCAR.a in Frameworks */,
 				15B2AA231520ADB500138A7D /* MediaPlayer.framework in Frameworks */,
 				15B2AA211520ADA100138A7D /* AudioToolbox.framework in Frameworks */,
@@ -200,10 +217,10 @@
 				15B2AA0A1520A83A00138A7D /* AVFoundation.framework in Frameworks */,
 				15B2AA081520A83500138A7D /* CoreMedia.framework in Frameworks */,
 				15B2AA061520A82C00138A7D /* CoreVideo.framework in Frameworks */,
-				15B2AA041520A82500138A7D /* SystemConfiguration.framework in Frameworks */,
 				15B2A99A1520A27C00138A7D /* UIKit.framework in Frameworks */,
 				15B2A99C1520A27C00138A7D /* Foundation.framework in Frameworks */,
 				15B2A99E1520A27C00138A7D /* CoreGraphics.framework in Frameworks */,
+				57EFA0E2174E965B007D75D9 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +230,7 @@
 		15B2A98A1520A27C00138A7D = {
 			isa = PBXGroup;
 			children = (
+				57EFA0E3174E9677007D75D9 /* CoreData.framework */,
 				57741AA0174AA34A00770855 /* QCAR */,
 				15CE874F164171D8005AE890 /* ARCommon */,
 				1526F6D216380ED8006408F8 /* Default-Landscape@2x~ipad.png */,
@@ -277,6 +295,9 @@
 				151E5D311525B3EF00BE66B7 /* VideoPlayerHelper.m */,
 				15CF192D1525FB2D00AFE42F /* VPParentViewController.h */,
 				15CF192E1525FB2D00AFE42F /* VPParentViewController.m */,
+				57EFA0D6174E877E007D75D9 /* iPostalModalView.xib */,
+				57EFA0D8174E87B6007D75D9 /* iPostalModalViewController.h */,
+				57EFA0D9174E87B6007D75D9 /* iPostalModalViewController.m */,
 				15B2A9A01520A27C00138A7D /* Supporting Files */,
 			);
 			path = VideoPlayback;
@@ -287,6 +308,7 @@
 			children = (
 				15B2A9A11520A27C00138A7D /* VideoPlayback-Info.plist */,
 				15B2A9A51520A27C00138A7D /* VideoPlayback-Prefix.pch */,
+				57EFA0E5174E9960007D75D9 /* GAI-ID.h */,
 				15B2A9A61520A27C00138A7D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -295,6 +317,7 @@
 		15B2A9CC1520A50500138A7D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				57EFA0DB174E9650007D75D9 /* libs */,
 				15B2A9CD1520A51D00138A7D /* assets */,
 			);
 			name = Resources;
@@ -405,6 +428,19 @@
 			path = QCAR;
 			sourceTree = "<group>";
 		};
+		57EFA0DB174E9650007D75D9 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				57EFA0DC174E965B007D75D9 /* GAI.h */,
+				57EFA0DD174E965B007D75D9 /* GAITrackedViewController.h */,
+				57EFA0DE174E965B007D75D9 /* GAITracker.h */,
+				57EFA0DF174E965B007D75D9 /* GAITransaction.h */,
+				57EFA0E0174E965B007D75D9 /* GAITransactionItem.h */,
+				57EFA0E1174E965B007D75D9 /* libGoogleAnalytics.a */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -483,6 +519,7 @@
 				57C862F0174C157D003008B0 /* Over_Rainbow.mp4 in Resources */,
 				57317F94174E42B90017F5A5 /* ipostal_namorados_2013.xml in Resources */,
 				57317F95174E42B90017F5A5 /* ipostal_namorados_2013.dat in Resources */,
+				57EFA0D7174E877E007D75D9 /* iPostalModalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +545,7 @@
 				15CE876A164171EE005AE890 /* QCARutils.mm in Sources */,
 				15CE876D164171EE005AE890 /* ShaderUtils.cpp in Sources */,
 				15CE876E164171EE005AE890 /* Texture.mm in Sources */,
+				57EFA0DA174E87B6007D75D9 /* iPostalModalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +620,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					../../build/lib/arm,
 					"\"$(SRCROOT)/../../Development/iOS/vuforia-sdk-ios-2-0-32/build/lib/arm\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -617,6 +656,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					../../build/lib/arm,
 					"\"$(SRCROOT)/../../Development/iOS/vuforia-sdk-ios-2-0-32/build/lib/arm\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1240EB28-56B7-4CA3-8214-CDD490723E70";
@@ -675,6 +715,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					../../build/lib/arm,
 					"\"$(SRCROOT)/../../Development/iOS/vuforia-sdk-ios-2-0-32/build/lib/arm\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1240EB28-56B7-4CA3-8214-CDD490723E70";

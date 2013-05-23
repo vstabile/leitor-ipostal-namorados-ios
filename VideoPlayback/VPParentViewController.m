@@ -20,9 +20,24 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "ARViewController.h"
 #import "OverlayViewController.h"
 #import "EAGLView.h"
+#import "iPostalModalViewController.h"
 
 
 @implementation VPParentViewController // subclass of ARParentViewController
+
+- (void) viewDidLoad{
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    static bool modalActived = NO;
+    if(!modalActived){
+        iPostalModalViewController *target = [[iPostalModalViewController alloc] initWithNibName:@"iPostalModalView" bundle:[NSBundle mainBundle]];
+        [self presentModalViewController:target animated:NO];
+        modalActived = YES;
+    }
+}
 
 // Pass touches on to the AR view (EAGLView)
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

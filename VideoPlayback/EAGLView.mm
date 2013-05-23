@@ -357,7 +357,6 @@ namespace {
 
         // VideoPlayerHelper to use for current target
         int playerIndex = 0;    // stones
-        NSLog(@"%s",imageTarget.getName());
         if (strcmp(imageTarget.getName(), "all_you_need") == 0){ playerIndex = 3; }
         else if (strcmp(imageTarget.getName(), "over_the_rainbow") == 0) { playerIndex = 1; }
         else if (strcmp(imageTarget.getName(), "better_together") == 0) { playerIndex = 2; }

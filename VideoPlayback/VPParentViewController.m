@@ -33,7 +33,10 @@ then you may not retain or use any of the Sample Code in any manner.
     [super viewDidAppear:animated];
     static bool modalActived = NO;
     if(!modalActived){
-        iPostalModalViewController *target = [[iPostalModalViewController alloc] initWithNibName:@"iPostalModalView" bundle:[NSBundle mainBundle]];
+        NSString * xibName = @"iPostalModalView";
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            xibName = @"iPostalModalView~ipad";
+        iPostalModalViewController *target = [[iPostalModalViewController alloc] initWithNibName:xibName bundle:[NSBundle mainBundle]];
         [self presentModalViewController:target animated:NO];
         modalActived = YES;
     }

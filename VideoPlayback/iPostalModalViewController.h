@@ -13,5 +13,8 @@
 }
 - (IBAction)ipostalclicked:(id)sender;
 - (IBAction)okClicked:(id)sender;
+@property (retain, nonatomic) IBOutlet UIButton *comecarBtn;
+@property (retain, nonatomic) IBOutlet UIButton *baixarBtn;
+@property (retain, nonatomic) IBOutlet UIImageView *bgImage;
 
 @end

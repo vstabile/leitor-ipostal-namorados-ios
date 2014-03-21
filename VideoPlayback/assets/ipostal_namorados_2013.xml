@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
-  <Tracking>
-    <ImageTarget size="800 567" name="stopmotion" />
-    <ImageTarget size="401.861237 567" name="over_the_rainbow" />
-    <ImageTarget size="800 567" name="better_together" />
-    <ImageTarget size="401.861237 567" name="all_you_need" />
-  </Tracking>
-</QCARConfig>

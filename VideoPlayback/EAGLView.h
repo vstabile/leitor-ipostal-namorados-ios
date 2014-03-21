@@ -18,11 +18,12 @@ then you may not retain or use any of the Sample Code in any manner.
 
 #import "AR_EAGLView.h"
 #import "VideoPlayerHelper.h"
-
+#import "videoDownloader.h"
 // Define to load and play a video file from a remote location
 //#define EXAMPLE_CODE_REMOTE_FILE
 
-#define NUM_VIDEO_TARGETS 4
+#warning CHANGE HERE 1
+#define NUM_VIDEO_TARGETS 15
 
 // This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView
 // subclass.  The view content is basically an EAGL surface you render your
@@ -31,6 +32,8 @@ then you may not retain or use any of the Sample Code in any manner.
 @interface EAGLView : AR_EAGLView
 {
 @private
+    NSMutableArray * isDownloadedArray;
+    NSMutableArray * isDownloadingArray;
     // Instantiate one VideoPlayerHelper per target
     VideoPlayerHelper* videoPlayerHelper[NUM_VIDEO_TARGETS];
     

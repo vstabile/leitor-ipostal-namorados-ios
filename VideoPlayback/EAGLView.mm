@@ -21,7 +21,8 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "Texture.h"
 #import "Quad.h"
 #import "SampleMath.h"
-
+#import "CERoundProgressLayer.h"
+#import "CERoundProgressView.h"
 #import <QCAR/Renderer.h>
 #import <QCAR/ImageTarget.h>
 #import <QCAR/Vectors.h>
@@ -30,16 +31,29 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "QCARutils.h"
 #import "ShaderUtils.h"
 
+#warning CHANGE HERE 2
 namespace {
     // Texture filenames (an Object3D object is created for each texture)
     const char* textureFilenames[] = {
         "icon_play.png",
         "icon_loading.png",
         "icon_error.png",
-        "StopMotion.jpg",
+
+        "bebendo_leite_thumbnail.jpg",
+        "comemorar_thumbnail.jpg",
+        "loro.jpg",
+        "bolo_rotatorio_thumbnail.jpg",
         "Over_Rainbow.jpg",
         "Better_Together.jpg",
-        "all_you_need.jpg"
+        "StopMotion.jpg",
+        "happy_fathers_day.jpg",
+        "all_you_need.jpg",
+        "dia_de_parabens_thumbnail.jpg",
+        "super_hero.jpg",
+        "rena_cantando.jpg",
+        "pascoa.jpg",
+        "dia_das_maes.jpg",
+        "dia_dos_namorados.jpg"
     };
     
     enum tagObjectIndex {
@@ -54,8 +68,8 @@ namespace {
     const NSTimeInterval TRACKING_LOST_TIMEOUT = 2.0f;
     
     // Playback icon scale factors
-    const float SCALE_ICON = 2.0f;
-    const float SCALE_ICON_TRANSLATION = 1.98f;
+    const float SCALE_ICON = 2.0f;  //2.0f
+    const float SCALE_ICON_TRANSLATION = 1.4f;  //1.98f;
     
     // Video quad texture coordinates
     const GLfloat videoQuadTextureCoords[] = {
@@ -87,7 +101,6 @@ namespace {
 - (void)trackingLostTimerFired:(NSTimer*)timer;
 @end
 
-
 @implementation EAGLView
 
 - (id)initWithFrame:(CGRect)frame
@@ -96,10 +109,19 @@ namespace {
     
 	if (self)
     {
+        isDownloadedArray = [[NSMutableArray alloc] initWithCapacity:NUM_VIDEO_TARGETS];
+        isDownloadingArray = [[NSMutableArray alloc] initWithCapacity:NUM_VIDEO_TARGETS];
+        for (int i = 0; i < NUM_VIDEO_TARGETS; i ++)
+        {
+            [isDownloadedArray addObject:@NO];
+            [isDownloadingArray addObject:@NO];
+        }
         // create list of textures we want loading - ARViewController will do this for us
         int nTextures = sizeof(textureFilenames) / sizeof(textureFilenames[0]);
-        for (int i = 0; i < nTextures; ++i) {
+        for (int i = 0; i < nTextures; ++i)
+        {
             [textureList addObject: [NSString stringWithUTF8String:textureFilenames[i]]];
+            NSLog(@"texture list filename:%@", [NSString stringWithUTF8String:textureFilenames[i]]);
         }
         
         // Ensure touch events go to the view controller, rather than directly
@@ -195,14 +217,6 @@ namespace {
         // Get the state of the video player for the target the user touched
         MEDIA_STATE mediaState = [videoPlayerHelper[touchedTarget] getStatus];
         
-#ifdef EXAMPLE_CODE_REMOTE_FILE
-        // With remote files, single tap starts playback using the native player
-        if (ERROR != mediaState && NOT_READY != mediaState) {
-            // Play the video
-            NSLog(@"Playing video with native player");
-            [videoPlayerHelper[touchedTarget] play:YES fromPosition:VIDEO_PLAYBACK_CURRENT_POSITION];
-        }
-#else
         // If any on-texture video is playing, pause it
         for (int i = 0; i < NUM_VIDEO_TARGETS; ++i) {
             if (PLAYING == [videoPlayerHelper[i] getStatus]) {
@@ -211,12 +225,190 @@ namespace {
         }
         
         // For the target the user touched
-        if (ERROR != mediaState && NOT_READY != mediaState && PLAYING != mediaState) {
+        if (ERROR != mediaState /* && NOT_READY != mediaState */ && PLAYING != mediaState) {
             // Play the video
             NSLog(@"Playing video with on-texture player");
-            [videoPlayerHelper[touchedTarget] play:NO fromPosition:VIDEO_PLAYBACK_CURRENT_POSITION];
+            if ([[isDownloadedArray objectAtIndex:touchedTarget] boolValue])
+            {
+                [videoPlayerHelper[touchedTarget] play:NO fromPosition:VIDEO_PLAYBACK_CURRENT_POSITION];
+            }
+            else
+            {
+
+#warning CHANGE HERE 3
+                NSString * fileName;
+                switch (touchedTarget) {
+                    case 0:
+                        fileName = @"bebendo_leite.mp4";
+                        break;
+                    case 1:
+                        fileName = @"comemorar.mp4";
+                        break;
+                    case 2:
+                        fileName = @"loro.mp4";
+                        break;
+                    case 3:
+                        fileName = @"bolo_rotatorio.mp4";
+                        break;
+                    case 4:
+                        fileName = @"over_the_rainbow.mp4";
+                        break;
+                    case 5:
+                        fileName = @"better_together.mp4";
+                        break;
+                    case 6:
+                        fileName = @"stopmotion.mp4";
+                        break;
+                    case 7:
+                        fileName = @"happy_fathers_day.mp4";
+                        break;
+                    case 8:
+                        fileName = @"all_you_need.mp4";
+                        break;
+                    case 9:
+                        fileName = @"dia_de_parabens.mp4";
+                        break;
+                    case 10:
+                        fileName = @"super_hero.mp4";
+                        break;
+                    case 11:
+                        fileName = @"rena_cantando.mp4";
+                        break;
+                    case 12:
+                        fileName = @"pascoa.mp4";
+                        break;
+                    case 13:
+                        fileName = @"dia_das_maes.mp4";
+                        break;
+                    case 14:
+                        fileName = @"dia_dos_namorados.mp4";
+                        break;
+                    default:
+                        break;
+                }
+                
+
+                NSArray *paths = NSSearchPathForDirectoriesInDomains
+                (NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsDirectory = [paths objectAtIndex:0];
+
+                NSString *filePath = [NSString stringWithFormat:@"%@/%@",
+                                      documentsDirectory, fileName];
+                
+                
+                if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                {
+                    UIView * myProgressView;
+                    CERoundProgressView * progressPie;
+                    if(UIUserInterfaceIdiomPad == [[UIDevice currentDevice] userInterfaceIdiom])
+                    {
+                        myProgressView = (UIView*)[[UIView alloc] initWithFrame:CGRectMake(320/2 - 180/2, 480/2 - 180/2, 180 * 2, 180 * 2)];
+                        myProgressView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
+                        progressPie = [[CERoundProgressView alloc] initWithFrame:CGRectMake(59 * 2, 55 * 2, 70 * 2, 70 * 2)];
+                        
+                        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 180 * 2, 50)];
+                        label.font = [UIFont systemFontOfSize:30.0f];
+                        label.textAlignment = NSTextAlignmentCenter;
+                        label.text = @"Downloading video";
+                        label.textColor = [UIColor lightTextColor];
+                        label.backgroundColor = [UIColor clearColor];
+                        [myProgressView addSubview:label];
+                        
+                        
+                        //    progressPie.animationDuration = 3.0f;
+                        //    progressPie.progress = 0.0f;
+                        progressPie.trackColor = [UIColor colorWithWhite:0.80 alpha:0.0];
+                        progressPie.tintColor = [UIColor orangeColor];
+                        progressPie.startAngle = (3.0*M_PI)/2.0;
+                        progressPie.progress = .0;
+                        progressPie.backgroundColor = [UIColor clearColor];
+                        [myProgressView addSubview:progressPie];
+                        myProgressView.center = [[[UIApplication sharedApplication] keyWindow] center];
+                        [[[UIApplication sharedApplication] keyWindow] addSubview:myProgressView];
+                    }
+                    else
+                    {
+                        myProgressView = (UIView*)[[UIView alloc] initWithFrame:CGRectMake(320/2 - 180/2, 480/2 - 180/2, 180, 180)];
+                        myProgressView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
+                        progressPie = [[CERoundProgressView alloc] initWithFrame:CGRectMake(59, 55, 70, 70)];
+                        
+                        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 180, 30)];
+                        label.textAlignment = NSTextAlignmentCenter;
+                        label.text = @"Downloading video";
+                        label.textColor = [UIColor lightTextColor];
+                        label.backgroundColor = [UIColor clearColor];
+                        [myProgressView addSubview:label];
+                        
+                        
+                        //    progressPie.animationDuration = 3.0f;
+                        //    progressPie.progress = 0.0f;
+                        progressPie.trackColor = [UIColor colorWithWhite:0.80 alpha:0.0];
+                        progressPie.tintColor = [UIColor orangeColor];
+                        progressPie.startAngle = (3.0*M_PI)/2.0;
+                        progressPie.progress = .0;
+                        progressPie.backgroundColor = [UIColor clearColor];
+                        [myProgressView addSubview:progressPie];
+                        myProgressView.center = [[[UIApplication sharedApplication] keyWindow] center];
+                        [[[UIApplication sharedApplication] keyWindow] addSubview:myProgressView];
+                    }
+                    
+                    videoDownloader * vd = [[videoDownloader alloc] init];
+                    [isDownloadingArray setObject:@YES atIndexedSubscript:touchedTarget];
+                    [vd getVideo:[NSURL URLWithString:[NSString stringWithFormat:@"https://s3-sa-east-1.amazonaws.com/ipostal.videos/production/%@", fileName]] progress:^(float progress)
+                    {
+                        NSLog(@"progress:%f", progress);
+                        progressPie.progress = progress;
+                    } completion:^(NSData *videoData) {
+                        NSArray *paths = NSSearchPathForDirectoriesInDomains
+                        (NSDocumentDirectory, NSUserDomainMask, YES);
+                        NSString *documentsDirectory = [paths objectAtIndex:0];
+                        //make a file name to write the data to using the documents directory:
+                        
+                        NSString *filePath = [NSString stringWithFormat:@"%@/%@",
+                                              documentsDirectory, fileName];
+                        
+                        [videoData writeToFile:filePath options:kNilOptions error:nil];
+                        NSLog(@"filePath:%@", filePath);
+                        NSLog(@"dataLength:%u", [videoData length]);
+                        NSLog(@"dataLength:%u", [[NSData dataWithContentsOfFile:filePath] length]);
+                        [videoPlayerHelper[touchedTarget] unload];
+                        NSLog(@"loadVideo:%@", ([videoPlayerHelper[touchedTarget] load:filePath playImmediately:YES fromPosition:-1.0f])? @"YES":@"NO");
+                        [isDownloadedArray setObject:@YES atIndexedSubscript:touchedTarget];
+                        [isDownloadingArray setObject:@NO atIndexedSubscript:touchedTarget];
+                        [myProgressView removeFromSuperview];
+                        NSMutableDictionary * mutDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"cache control"]];
+                        if (!mutDict)
+                        {
+                            mutDict = [NSMutableDictionary dictionary];
+                        }
+                        [mutDict setObject:[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]] forKey:fileName];
+                        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithDictionary:mutDict] forKey:@"cache control"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                     error:^(NSString *error)
+                    {
+                         [myProgressView removeFromSuperview];
+                         [[[UIAlertView alloc] initWithTitle:@"Falta de conexão" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }];
+                }
+                else
+                {
+                    NSMutableDictionary * mutDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"cache control"]];
+                    if (!mutDict)
+                    {
+                        mutDict = [NSMutableDictionary dictionary];
+                    }
+                    [mutDict setObject:[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]] forKey:fileName];
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithDictionary:mutDict] forKey:@"cache control"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    NSLog(@"cache control:%@", mutDict);
+                    [videoPlayerHelper[touchedTarget] unload];
+                    NSLog(@"load moview:%@", ([videoPlayerHelper[touchedTarget] load:filePath playImmediately:YES fromPosition:-1.0f])?@"YES":@"NO");
+                    [isDownloadedArray setObject:@YES atIndexedSubscript:touchedTarget];
+                    [isDownloadingArray setObject:@(NO) atIndexedSubscript:touchedTarget];
+                }
+            }
         }
-#endif
     }
 }
 
@@ -318,6 +510,7 @@ namespace {
 // *** QCAR will call this method on a single background thread ***
 - (void)renderFrameQCAR
 {
+//    NSLog(@"renderFrameQCAR");
     [self setFramebuffer];
     
     // Clear colour and depth buffers
@@ -355,12 +548,24 @@ namespace {
         const QCAR::TrackableResult* trackableResult = state.getTrackableResult(i);
         const QCAR::ImageTarget& imageTarget = (const QCAR::ImageTarget&) trackableResult->getTrackable();
 
-        // VideoPlayerHelper to use for current target
-        int playerIndex = 0;    // stones
-        if (strcmp(imageTarget.getName(), "all_you_need") == 0){ playerIndex = 3; }
-        else if (strcmp(imageTarget.getName(), "over_the_rainbow") == 0) { playerIndex = 1; }
-        else if (strcmp(imageTarget.getName(), "better_together") == 0) { playerIndex = 2; }
-        else if (strcmp(imageTarget.getName(), "stopmotion") == 0) { playerIndex = 0; }
+
+#warning CHANGE HERE 4
+        int playerIndex = 0x0;
+        if      (strcmp(imageTarget.getName(), "bebendo_leite"     ) == 0)  playerIndex = 0x0;
+        else if (strcmp(imageTarget.getName(), "comemorar"         ) == 0)  playerIndex = 0x1;
+        else if (strcmp(imageTarget.getName(), "Loro"              ) == 0)  playerIndex = 0x2;
+        else if (strcmp(imageTarget.getName(), "bolo_rotatorio"    ) == 0)  playerIndex = 0x3;
+        else if (strcmp(imageTarget.getName(), "over_the_rainbow"  ) == 0)  playerIndex = 0x4;
+        else if (strcmp(imageTarget.getName(), "better_together"   ) == 0)  playerIndex = 0x5;
+        else if (strcmp(imageTarget.getName(), "stopmotion"        ) == 0)  playerIndex = 0x6;
+        else if (strcmp(imageTarget.getName(), "happy_fathers_day" ) == 0)  playerIndex = 0x7;
+        else if (strcmp(imageTarget.getName(), "all_you_need"      ) == 0)  playerIndex = 0x8;
+        else if (strcmp(imageTarget.getName(), "dia_de_parabens"   ) == 0)  playerIndex = 0x9;
+        else if (strcmp(imageTarget.getName(), "super_hero"        ) == 0)  playerIndex = 0xa;
+        else if (strcmp(imageTarget.getName(), "rena_cantando"     ) == 0)  playerIndex = 0xb;
+        else if (strcmp(imageTarget.getName(), "pascoa"            ) == 0)  playerIndex = 0xc;
+        else if (strcmp(imageTarget.getName(), "dia_das_maes"      ) == 0)  playerIndex = 0xd;
+        else if (strcmp(imageTarget.getName(), "dia_dos_namorados" ) == 0)  playerIndex = 0xe;
         
         // Mark this video (target) as active
         videoData[playerIndex].isActive = YES;
@@ -379,7 +584,8 @@ namespace {
         
         // Get the current trackable pose
         const QCAR::Matrix34F& trackablePose = trackableResult->getPose();
-        
+
+
         // This matrix is used to calculate the location of the screen tap
         videoData[playerIndex].modelViewMatrix = QCAR::Tool::convertPose2GLMatrix(trackablePose);
         
@@ -450,23 +656,25 @@ namespace {
             frameTextureID = [[obj3D texture] textureID];
             aspectRatio = (float)[[obj3D texture] height] / (float)[[obj3D texture] width];
             texCoords = quadTexCoords;
+//            NSLog(@"keyframe:\n%u, %f", frameTextureID, (float)[[obj3D texture] height] / (float)[[obj3D texture] width]);
         }
         
         // If the current status is valid (not NOT_READY or ERROR), render the
         // video quad with the texture we've just selected
-        if (NOT_READY != currentStatus) {
+//        if (NOT_READY != currentStatus || ![[isDownloadedArray objectAtIndex:playerIndex] boolValue])
+        {
             // Convert trackable pose to matrix for use with OpenGL
             QCAR::Matrix44F modelViewMatrixVideo = QCAR::Tool::convertPose2GLMatrix(trackablePose);
             QCAR::Matrix44F modelViewProjectionVideo;
             
             ShaderUtils::translatePoseMatrix(0.0f, 0.0f, videoData[playerIndex].targetPositiveDimensions.data[0],
                                              &modelViewMatrixVideo.data[0]);
-            
+
             ShaderUtils::scalePoseMatrix(videoData[playerIndex].targetPositiveDimensions.data[0], 
                                          videoData[playerIndex].targetPositiveDimensions.data[0] * aspectRatio, 
                                          videoData[playerIndex].targetPositiveDimensions.data[0],
                                          &modelViewMatrixVideo.data[0]);
-            
+
             ShaderUtils::multiplyMatrix(&qUtils.projectionMatrix.data[0],
                                         &modelViewMatrixVideo.data[0] ,
                                         &modelViewProjectionVideo.data[0]);
@@ -485,6 +693,29 @@ namespace {
             glBindTexture(GL_TEXTURE_2D, frameTextureID);
             glUniformMatrix4fv(mvpMatrixHandle, 1, GL_FALSE, (GLfloat*)&modelViewProjectionVideo.data[0]);
             glUniform1i(texSampler2DHandle, 0 /*GL_TEXTURE0*/);
+//            static int counter = 0;
+//            if (counter % 30 == 0)
+//            {
+//                NSLog(@"\nframeTextureID:%u\n%f\n%i\n%i", frameTextureID, modelViewProjectionVideo.data[0], mvpMatrixHandle, texSampler2DHandle);
+//                
+//                NSLog(@"videoData:%f, %f", videoData[playerIndex].targetPositiveDimensions.data[0], videoData[playerIndex].targetPositiveDimensions.data[1]);
+//                NSLog(@"aspectRatio:%f", aspectRatio);
+//                NSLog(@"trackablePose:\n%f,%f,%f\n%f,%f,%f\n%f,%f,%f\n%f,%f,%f",
+//                      trackablePose.data[0],
+//                      trackablePose.data[1],
+//                      trackablePose.data[2],
+//                      trackablePose.data[3],
+//                      trackablePose.data[4],
+//                      trackablePose.data[5],
+//                      trackablePose.data[6],
+//                      trackablePose.data[7],
+//                      trackablePose.data[8],
+//                      trackablePose.data[9],
+//                      trackablePose.data[10],
+//                      trackablePose.data[11]);
+//                
+//            }
+//            counter++;
             glDrawElements(GL_TRIANGLES, NUM_QUAD_INDEX, GL_UNSIGNED_SHORT, quadIndices);
             
             glDisableVertexAttribArray(vertexHandle);
@@ -498,29 +729,43 @@ namespace {
         if (PLAYING != currentStatus) {
             GLuint iconTextureID;
             
-            switch (currentStatus) {
-                case READY:
-                case REACHED_END:
-                case PAUSED:
-                case STOPPED: {
-                    // ----- Display play icon -----
-                    Object3D* obj3D = [objects3D objectAtIndex:OBJECT_PLAY_ICON];
-                    iconTextureID = [[obj3D texture] textureID];
-                    break;
-                }
-                    
-                case ERROR: {
-                    // ----- Display error icon -----
-                    Object3D* obj3D = [objects3D objectAtIndex:OBJECT_ERROR_ICON];
-                    iconTextureID = [[obj3D texture] textureID];
-                    break;
-                }
-                    
-                default: {
-                    // ----- Display busy icon -----
-                    Object3D* obj3D = [objects3D objectAtIndex:OBJECT_BUSY_ICON];
-                    iconTextureID = [[obj3D texture] textureID];
-                    break;
+            if ([[isDownloadingArray objectAtIndex:playerIndex] boolValue])
+            {
+                // ----- Display busy icon -----
+                Object3D* obj3D = [objects3D objectAtIndex:OBJECT_BUSY_ICON];
+                iconTextureID = [[obj3D texture] textureID];
+            }
+            else if(![[isDownloadedArray objectAtIndex:playerIndex] boolValue])
+            {
+                Object3D* obj3D = [objects3D objectAtIndex:OBJECT_PLAY_ICON];
+                iconTextureID = [[obj3D texture] textureID];
+            }
+            else
+            {
+                switch (currentStatus) {
+                    case READY:
+                    case REACHED_END:
+                    case PAUSED:
+                    case STOPPED: {
+                        // ----- Display play icon -----
+                        Object3D* obj3D = [objects3D objectAtIndex:OBJECT_PLAY_ICON];
+                        iconTextureID = [[obj3D texture] textureID];
+                        break;
+                    }
+                        
+                    case ERROR: {
+                        // ----- Display error icon -----
+                        Object3D* obj3D = [objects3D objectAtIndex:OBJECT_ERROR_ICON];
+                        iconTextureID = [[obj3D texture] textureID];
+                        break;
+                    }
+                        
+                    default: {
+                        // ----- Display busy icon -----
+                        Object3D* obj3D = [objects3D objectAtIndex:OBJECT_BUSY_ICON];
+                        iconTextureID = [[obj3D texture] textureID];
+                        break;
+                    }
                 }
             }
             

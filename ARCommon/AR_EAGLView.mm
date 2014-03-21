@@ -155,9 +155,10 @@
     
     // The framebuffer will be re-created at the beginning of the next setFramebuffer method call.
     [self deleteFramebuffer];
-    
+    NSLog(@"step1");
     // Initialisation done once, or once per screen size change
     [self initRendering];
+        NSLog(@"step2");
 }
 
 
@@ -377,6 +378,7 @@
     glClearColor(0.0f, 0.0f, 0.0f, QCAR::requiresAlpha() ? 0.0f : 1.0f);
     
     // Generate the OpenGL texture objects
+    NSLog(@"[textures count]:%d", [textures count]);
     for (int i = 0; i < [textures count]; ++i) {
         GLuint nID;
         Texture* texture = [textures objectAtIndex:i];

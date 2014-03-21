@@ -622,13 +622,12 @@ static NSString* const kRateKey = @"rate";
         
         [latestSampleBufferLock unlock];
     }
-    
     return textureID;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
+
+#pragma mark - 
 #pragma mark AVPlayer observation
 // Called when the value at the specified key path relative to the given object
 // has changed.  Note, this method is invoked on the main queue
@@ -688,8 +687,8 @@ static NSString* const kRateKey = @"rate";
     }
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
+
 #pragma mark -
 #pragma mark MPMoviePlayerController observation
 // Called when the movie player's media load state changes
@@ -848,12 +847,14 @@ static NSString* const kRateKey = @"rate";
                                 if (status == AVKeyValueStatusLoaded) {
                                     // Asset loaded, retrieve info and prepare
                                     // for playback
-                                    if (NO == [self prepareAssetForPlayback]) {
+                                    if (NO == [self prepareAssetForPlayback])
+                                    {
                                         NSLog(@"Error - Unable to prepare media for playback");
                                         mediaState = ERROR;
                                     }
                                 }
-                                else {
+                                else
+                                {
                                     // Error
                                     NSLog(@"Error - The asset's tracks were not loaded: %@", [error localizedDescription]);
                                     mediaState = ERROR;
@@ -871,6 +872,7 @@ static NSString* const kRateKey = @"rate";
 {
     // Get video properties
     videoSize = [asset naturalSize];
+    
     videoLengthSeconds = CMTimeGetSeconds([asset duration]);
     
     // Start playback at time 0.0
@@ -1174,8 +1176,8 @@ static NSString* const kRateKey = @"rate";
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
+//	glBindTexture(GL_TEXTURE_2D, 0);
+	NSLog(@"generated Texture:%d", handle);
 	return handle;
 }
 

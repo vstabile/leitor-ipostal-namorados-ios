@@ -282,6 +282,7 @@ QCARutils *qUtils = nil; // singleton class
 ////////////////////////////////////////////////////////////////////////////////
 - (void)updateApplicationStatus:(status)newStatus
 {
+    NSLog(@"updateApplicationStatus:%d", newStatus);
     if (newStatus != appStatus && APPSTATUS_ERROR != appStatus) {
         appStatus = newStatus;
         
@@ -331,7 +332,6 @@ QCARutils *qUtils = nil; // singleton class
                 // Tasks for after QCAR inited but before camera starts running
                 QCAR::onResume(); // ensure it's called first time in
                 [self postInitQCAR];
-                
                 [self updateApplicationStatus:APPSTATUS_CAMERA_RUNNING];
                 break;
                 

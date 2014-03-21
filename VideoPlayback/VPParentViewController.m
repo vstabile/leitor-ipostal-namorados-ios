@@ -20,27 +20,20 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "ARViewController.h"
 #import "OverlayViewController.h"
 #import "EAGLView.h"
-#import "iPostalModalViewController.h"
 
 
 @implementation VPParentViewController // subclass of ARParentViewController
 
-- (void) viewDidLoad{
+- (void) viewDidLoad
+{
     
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
-    static bool modalActived = NO;
-    if(!modalActived){
-        NSString * xibName = @"iPostalModalView";
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            xibName = @"iPostalModalView~ipad";
-        iPostalModalViewController *target = [[iPostalModalViewController alloc] initWithNibName:xibName bundle:[NSBundle mainBundle]];
-        [self presentModalViewController:target animated:NO];
-        modalActived = YES;
-    }
 }
+
 
 // Pass touches on to the AR view (EAGLView)
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
@@ -70,6 +63,7 @@ then you may not retain or use any of the Sample Code in any manner.
 // Add a movie player view as a subview of the main (parent) view
 - (void)addMoviePlayerToMainView:(MPMoviePlayerController*)player
 {
+    NSLog(@"adding video player");
     [parentView addSubview:player.view];
     [player retain];
     moviePlayer = player;

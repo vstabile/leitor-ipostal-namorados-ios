@@ -65,7 +65,7 @@ enum HINT {
      *  tracking more than two targets this value should be set to 2.
      *  Default is: 1.
      */
-    HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS = 0,
+    HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS = 2,
 };
 
 

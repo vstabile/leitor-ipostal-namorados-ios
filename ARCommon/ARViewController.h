@@ -8,7 +8,7 @@
 @class EAGLView, QCARutils;
 
 @interface ARViewController : UIViewController {
-@public
+@publicAKIAI2TBUXCBQ
     IBOutlet EAGLView *arView;  // the Augmented Reality view
     CGSize arViewSize;          // required view size
 

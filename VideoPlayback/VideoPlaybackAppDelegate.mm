@@ -61,6 +61,7 @@ then you may not retain or use any of the Sample Code in any manner.
 #import "QCARutils.h"
 #import "GAI.h"
 #import "GAI-ID.h"
+#import "VersionChecker.h"
 
 @implementation VideoPlaybackAppDelegate
 
@@ -85,6 +86,51 @@ namespace {
 // this is the application entry point
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [application setStatusBarHidden:YES];
+    
+    [[VersionChecker alloc] init];
+    
+    ////////// CACHE CONTROL ////////////
+    {
+        NSMutableDictionary * mutDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"cache control"]];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains
+        (NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        long long totalSize;
+#define MAX_SIZE 31457280
+        do
+        {
+            totalSize = 0;
+            for (NSString * fileName in mutDict)
+            {
+                NSString *filePath = [NSString stringWithFormat:@"%@/%@",
+                                      documentsDirectory, fileName];
+                totalSize += [[[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] objectForKey:NSFileSize] longLongValue];
+            }
+            
+            
+            if (totalSize > MAX_SIZE)
+            {
+                int time = INT_MAX;
+                NSString * toDelete;
+                for (NSString * fileName in mutDict)
+                {
+                    if ([[mutDict objectForKey:fileName] integerValue] < time)
+                        toDelete = fileName;
+                }
+                [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentsDirectory, toDelete] error:nil];
+                [mutDict removeObjectForKey:toDelete];
+            }
+        }while (totalSize > MAX_SIZE);
+#undef MAX_SIZE
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithDictionary:mutDict] forKey:@"cache control"];
+    }
+    
+    
+    
+    
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
@@ -92,7 +138,7 @@ namespace {
     // Optional: set debug to YES for extra debugging information.
     [GAI sharedInstance].debug = YES;
     // Create tracker instance.
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GoogleAnalytics_ID];
+    (void)[[GAI sharedInstance] trackerWithTrackingId:GoogleAnalytics_ID];
     
     
     QCARutils *qUtils = [QCARutils getInstance];
@@ -102,7 +148,7 @@ namespace {
     
     // Provide a list of targets we're expecting - the first in the list is the default
 //    [qUtils addTargetName:@"Stones & Chips" atPath:@"ipostal_namorados_2013"];
-    [qUtils addTargetName:@"namorados ipostal" atPath:@"ipostal_namorados_2013.xml"];
+    [qUtils addTargetName:@"namorados ipostal" atPath:@"iPostal.xml"];
     
     // Add the EAGLView and the overlay view to the window
     arParentViewController = [[VPParentViewController alloc] initWithWindow:window];
@@ -112,6 +158,7 @@ namespace {
     
     return YES;
 }
+
 
 
 - (void)enableContinue:(NSTimer*)theTimer
@@ -142,50 +189,14 @@ namespace {
     }
     
     // Load the video for use with the EAGLView
-    EAGLView* arView = [arParentViewController getARView];
-    
-#ifdef EXAMPLE_CODE_REMOTE_FILE
-    // Load a remote file for playback
-    for (int i = 0; i < NUM_VIDEO_TARGETS; ++i) {
-        VideoPlayerHelper* player = [arView getVideoPlayerHelper:i];
-        [player load:@"http://<SOME_URL>" playImmediately:NO fromPosition:VIDEO_PLAYBACK_CURRENT_POSITION];
-    }
-#else
-    // For each video-augmented target
-    for (int i = 0; i < NUM_VIDEO_TARGETS; ++i) {
-        // Load a local file for playback and resume playback if video was
-        // playing when the app went into the background
-        VideoPlayerHelper* player = [arView getVideoPlayerHelper:i];
-        NSString* filename;
-        
-        switch (i) {
-            case 0:
-                filename = @"StopMotion.mp4";
-                break;
-            case 1:
-                filename = @"Over_Rainbow.mp4";
-                break;
-            case 2:
-                filename = @"Better_Together.mp4";
-                break;
-            case 3:
-                filename = @"all_you_need.mp4";
-                break;
-            default:
-                break;
-        }
-        
-        if (NO == [player load:filename playImmediately:NO fromPosition:videoPlaybackTime[i]]) {
-            NSLog(@"Failed to load media");
-        }
-    }
-#endif
-    
+//    EAGLView* arView =
+    [arParentViewController getARView];
     firstTime = NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    exit(0);
     // Remove the native movie player view (if it is displayed).  This gives us
     // a clean restart on iOS 4 and 5
     [arParentViewController removeMoviePlayerView];

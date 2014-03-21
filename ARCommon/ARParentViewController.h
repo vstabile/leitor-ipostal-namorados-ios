@@ -18,6 +18,12 @@
     // Splash view
     UIImageView* splashView;
     UIWindow* appWindow;
+//    UIActivityIndicatorView * indicator1;
+//    UIActivityIndicatorView * indicator2;
+    CGRect continuarRect;
+    CGRect appstoreRect;
+    UIButton * continuarButton;
+    UIButton * appStoreButton;
 }
 
 @property (nonatomic) CGRect arViewRect;

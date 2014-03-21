@@ -84,7 +84,7 @@ then you may not retain or use any of the Sample Code in any manner.
         [textLabel setFont:font];
         [textLabel setBackgroundColor:[UIColor clearColor]];
         [textLabel setNumberOfLines:0];
-        [textLabel setLineBreakMode:UILineBreakModeWordWrap];
+        [textLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [textLabel setTextColor:[UIColor whiteColor]];
         [textLabel setText:@"This sample application shows how to play a video in AR mode.\n\nVideo from local files can be played directly on the image target.  Playback of remote files is supported in full screen mode only."];
         [textLabel sizeToFit];

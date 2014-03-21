@@ -27,14 +27,14 @@ then you may not retain or use any of the Sample Code in any manner.
 
 // Media states
 typedef enum tagMEDIA_STATE {
-    REACHED_END,
-    PAUSED,
-    STOPPED,
-    PLAYING,
-    READY,
+    REACHED_END, //
+    PAUSED, //
+    STOPPED, //
+    PLAYING, //
+    READY, //
     PLAYING_FULLSCREEN,
     NOT_READY,
-    ERROR
+    ERROR //
 } MEDIA_STATE;
 
 

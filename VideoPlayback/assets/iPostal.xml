@@ -4,17 +4,19 @@
     <ImageTarget name="over_the_rainbow" size="105.000000 148.148148" />
     <ImageTarget name="better_together" size="148.000000 104.894997" />
     <ImageTarget name="rena_cantando" size="148.000000 105.037712" />
+    <ImageTarget name="dia_dos_namorados" size="148.000000 105.080002" />
     <ImageTarget name="dia_de_parabens" size="105.000000 148.508286" />
     <ImageTarget name="super_hero" size="105.000000 148.066071" />
     <ImageTarget name="bebendo_leite" size="105.000000 148.072189" />
     <ImageTarget name="comemorar" size="105.000000 148.072189" />
     <ImageTarget name="Loro" size="500.000000 354.000000" />
     <ImageTarget name="bolo_rotatorio" size="148.000000 105.080002" />
+    <ImageTarget name="pascoa" size="105.000000 147.887329" />
     <ImageTarget name="stopmotion" size="148.000000 104.894997" />
     <ImageTarget name="happy_fathers_day" size="105.000000 148.066071" />
     <ImageTarget name="all_you_need" size="105.000000 148.148148" />
-    <ImageTarget name="dia_dos_namorados" size="148.000000 105.080002" />
     <ImageTarget name="dia_das_maes" size="105.000000 147.887329" />
-    <ImageTarget name="pascoa" size="105.000000 147.887329" />
+    <ImageTarget name="heart" size="148.000000 105.037712" />
+    <ImageTarget name="dinossauro" size="105.000000 147.946854" />
   </Tracking>
 </QCARConfig>
